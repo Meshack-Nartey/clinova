@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter run *)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(tmux new-session *)",
+      "Bash(tmux send-keys *)",
+      "Bash(brew install *)",
+      "Bash(xcode-select -p)",
+      "Bash(xcrun --find xcodebuild)",
+      "Bash(ls /Applications/ | grep -i xcode && ls /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild 2>/dev/null || echo \"Xcode.app not found\")",
+      "Read(//Applications/**)",
+      "Read(//Applications/Xcode.app/Contents/Developer/usr/bin/**)",
+      "Bash(sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer)",
+      "Bash(flutter config *)",
+      "Bash(sudo gem install cocoapods)",
+      "Bash(pod --version)",
+      "Bash(find /usr/local/bin /usr/bin /opt/homebrew/bin ~/.gem /Library/Ruby -name \"pod\" 2>/dev/null | head -5)",
+      "Read(//usr/local/bin/**)",
+      "Bash(find /Library/Ruby /usr/local -name \"pod\" -type f 2>/dev/null | head -5)",
+      "Read(//Library/Ruby/**)",
+      "Bash(gem environment *)"
+    ]
+  }
+}
