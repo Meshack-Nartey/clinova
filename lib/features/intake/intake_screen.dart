@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -22,7 +23,6 @@ class _IntakeScreenState extends ConsumerState<IntakeScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
 
-  // Demographic fields
   final _nameCtrl = TextEditingController();
   final _dobCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
@@ -30,7 +30,6 @@ class _IntakeScreenState extends ConsumerState<IntakeScreen> {
   final _complaintCtrl = TextEditingController();
   String? _sex;
 
-  // Vital fields
   final _bpCtrl = TextEditingController();
   final _tempCtrl = TextEditingController();
   final _weightCtrl = TextEditingController();
@@ -150,35 +149,176 @@ class _IntakeScreenState extends ConsumerState<IntakeScreen> {
           padding: const EdgeInsets.all(16),
           children: [
             _sectionHeader('Demographics'),
-            _field('Full name *', _nameCtrl, required: true),
+
+            // Name: letters, spaces, hyphens and apostrophes only
+            _field(
+              'Full name *',
+              _nameCtrl,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z\s\-\']")),
+              ],
+              validator: (v) =>
+                  (v == null || v.trim().isEmpty) ? 'Required' : null,
+            ),
             const SizedBox(height: 12),
             _dobField(),
             const SizedBox(height: 12),
             _sexDropdown(),
             const SizedBox(height: 12),
-            _field('Phone number', _phoneCtrl, keyboard: TextInputType.phone),
+
+            // Phone: digits, spaces, +, -, ()
+            _field(
+              'Phone number',
+              _phoneCtrl,
+              keyboard: TextInputType.phone,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[\d\s\+\-\(\)]')),
+              ],
+              validator: (v) {
+                if (v == null || v.trim().isEmpty) return null;
+                final digits = v.replaceAll(RegExp(r'\D'), '');
+                if (digits.length < 7) return 'Enter a valid phone number';
+                return null;
+              },
+            ),
             const SizedBox(height: 12),
+
             _field('Community / village', _communityCtrl),
             const SizedBox(height: 12),
-            _field('Chief complaint *', _complaintCtrl, required: true, maxLines: 3),
+
+            _field(
+              'Chief complaint *',
+              _complaintCtrl,
+              maxLines: 3,
+              validator: (v) =>
+                  (v == null || v.trim().isEmpty) ? 'Required' : null,
+            ),
             const SizedBox(height: 24),
+
             _sectionHeader('Vitals'),
-            _field('Blood pressure (mmHg)', _bpCtrl, hint: 'e.g. 120/80'),
+
+            // Blood pressure: digits and / only, format NNN/NN
+            _field(
+              'Blood pressure (mmHg)',
+              _bpCtrl,
+              hint: 'e.g. 120/80',
+              keyboard: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[\d\/]')),
+                LengthLimitingTextInputFormatter(7),
+              ],
+              validator: (v) {
+                if (v == null || v.trim().isEmpty) return null;
+                if (!RegExp(r'^\d{2,3}\/\d{2,3}$').hasMatch(v.trim())) {
+                  return 'Use format 120/80';
+                }
+                return null;
+              },
+            ),
             const SizedBox(height: 12),
+
             Row(children: [
-              Expanded(child: _field('Temp (°C)', _tempCtrl, keyboard: TextInputType.number)),
+              // Temperature: decimal, range 30–45 °C
+              Expanded(
+                child: _field(
+                  'Temp (°C)',
+                  _tempCtrl,
+                  keyboard: const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                    _SingleDotFormatter(),
+                  ],
+                  validator: (v) {
+                    if (v == null || v.trim().isEmpty) return null;
+                    final n = double.tryParse(v);
+                    if (n == null) return 'Invalid';
+                    if (n < 30 || n > 45) return '30–45 °C';
+                    return null;
+                  },
+                ),
+              ),
               const SizedBox(width: 12),
-              Expanded(child: _field('SpO₂ (%)', _spo2Ctrl, keyboard: TextInputType.number)),
+              // SpO₂: decimal, range 0–100 %
+              Expanded(
+                child: _field(
+                  'SpO₂ (%)',
+                  _spo2Ctrl,
+                  keyboard: const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                    _SingleDotFormatter(),
+                  ],
+                  validator: (v) {
+                    if (v == null || v.trim().isEmpty) return null;
+                    final n = double.tryParse(v);
+                    if (n == null) return 'Invalid';
+                    if (n < 0 || n > 100) return '0–100 %';
+                    return null;
+                  },
+                ),
+              ),
             ]),
             const SizedBox(height: 12),
+
             Row(children: [
-              Expanded(child: _field('Weight (kg)', _weightCtrl, keyboard: TextInputType.number)),
+              // Weight: positive decimal
+              Expanded(
+                child: _field(
+                  'Weight (kg)',
+                  _weightCtrl,
+                  keyboard: const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                    _SingleDotFormatter(),
+                  ],
+                  validator: (v) {
+                    if (v == null || v.trim().isEmpty) return null;
+                    final n = double.tryParse(v);
+                    if (n == null || n <= 0) return 'Invalid';
+                    if (n > 500) return 'Too high';
+                    return null;
+                  },
+                ),
+              ),
               const SizedBox(width: 12),
-              Expanded(child: _field('Height (cm)', _heightCtrl, keyboard: TextInputType.number)),
+              // Height: positive decimal
+              Expanded(
+                child: _field(
+                  'Height (cm)',
+                  _heightCtrl,
+                  keyboard: const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                    _SingleDotFormatter(),
+                  ],
+                  validator: (v) {
+                    if (v == null || v.trim().isEmpty) return null;
+                    final n = double.tryParse(v);
+                    if (n == null || n <= 0) return 'Invalid';
+                    if (n > 300) return 'Too high';
+                    return null;
+                  },
+                ),
+              ),
             ]),
             const SizedBox(height: 12),
-            _field('Pulse (bpm)', _pulseCtrl, keyboard: TextInputType.number),
+
+            // Pulse: integer only, range 20–300 bpm
+            _field(
+              'Pulse (bpm)',
+              _pulseCtrl,
+              keyboard: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              validator: (v) {
+                if (v == null || v.trim().isEmpty) return null;
+                final n = int.tryParse(v);
+                if (n == null) return 'Invalid';
+                if (n < 20 || n > 300) return '20–300 bpm';
+                return null;
+              },
+            ),
             const SizedBox(height: 32),
+
             ElevatedButton(
               onPressed: _saving ? null : _save,
               child: _saving
@@ -224,19 +364,19 @@ class _IntakeScreenState extends ConsumerState<IntakeScreen> {
   Widget _field(
     String label,
     TextEditingController ctrl, {
-    bool required = false,
     TextInputType keyboard = TextInputType.text,
     String? hint,
     int maxLines = 1,
+    List<TextInputFormatter>? inputFormatters,
+    String? Function(String?)? validator,
   }) =>
       TextFormField(
         controller: ctrl,
         decoration: InputDecoration(labelText: label, hintText: hint),
         keyboardType: keyboard,
         maxLines: maxLines,
-        validator: required
-            ? (v) => (v == null || v.trim().isEmpty) ? 'Required' : null
-            : null,
+        inputFormatters: inputFormatters,
+        validator: validator,
       );
 
   Widget _dobField() => TextFormField(
@@ -273,4 +413,15 @@ class _IntakeScreenState extends ConsumerState<IntakeScreen> {
         ],
         onChanged: (v) => setState(() => _sex = v),
       );
+}
+
+/// Prevents a second decimal point from being entered.
+class _SingleDotFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue old, TextEditingValue next) {
+    final dots = next.text.split('.').length - 1;
+    if (dots > 1) return old;
+    return next;
+  }
 }
