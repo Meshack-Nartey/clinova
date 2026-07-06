@@ -11,15 +11,19 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:        #0D2137;
-      --navy-mid:    #1A5276;
+      --navy:        #0F172A;
       --teal:        #0EA5A0;
       --teal-light:  #CCFBF1;
+      --primary:     #10B981;
+      --primary-mid: #059669;
+      --primary-dark: #047857;
+      --primary-deep: #065F46;
       --green:       #10B981;
       --green-dark:  #047857;
-      --green-deep:  #064E3B;
+      --green-deep:  #065F46;
       --green-light: #ECFDF5;
-      --sky:         #F0FDF4;
+      --green-100:   #D1FAE5;
+      --sky:         #FFFFFF;
       --white:       #FFFFFF;
       --gray-50:     #F8FAFC;
       --gray-100:    #F1F5F9;
@@ -90,7 +94,7 @@
 
     /* ─── HERO ─── */
     .hero {
-      background: var(--sky);
+      background: #ffffff;
       padding: 80px 6% 96px;
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 56px; align-items: center;
@@ -106,7 +110,7 @@
       content: '';
       position: absolute; top: -140px; right: -120px;
       width: 640px; height: 640px;
-      background: radial-gradient(circle, rgba(16,185,129,.18) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(16,185,129,.09) 0%, transparent 65%);
       border-radius: 50%; pointer-events: none;
       animation: blob-float 9s ease-in-out infinite;
     }
@@ -114,7 +118,7 @@
       content: '';
       position: absolute; bottom: -100px; left: -80px;
       width: 440px; height: 440px;
-      background: radial-gradient(circle, rgba(4,120,87,.12) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(14,165,160,.07) 0%, transparent 65%);
       border-radius: 50%; pointer-events: none;
       animation: blob-float 12s ease-in-out infinite reverse;
     }
@@ -204,7 +208,7 @@
     .m-title { flex: 1; text-align: center; font-size: .72rem; font-weight: 600; color: var(--muted); }
 
     .mockup-head {
-      background: linear-gradient(160deg, var(--green-deep) 0%, var(--green-dark) 60%, var(--green) 100%);
+      background: linear-gradient(160deg, #047857 0%, #059669 55%, #10B981 100%);
       padding: 32px 20px 26px; text-align: center;
     }
     .mock-logo-wrap {
@@ -241,7 +245,7 @@
 
     /* ─── STATS ─── */
     .stats {
-      background: linear-gradient(135deg, var(--green-deep) 0%, #065F46 60%, #047857 100%);
+      background: linear-gradient(135deg, #059669 0%, #10B981 50%, #0EA5A0 100%);
       padding: 52px 6%;
       display: grid; grid-template-columns: repeat(3, 1fr);
       text-align: center; position: relative; overflow: hidden;
@@ -257,7 +261,7 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text; line-height: 1;
     }
-    .stat-lbl { font-size: .83rem; color: rgba(255,255,255,.5); font-weight: 500; margin-top: 8px; letter-spacing: .2px; }
+    .stat-lbl { font-size: .83rem; color: rgba(255,255,255,.75); font-weight: 500; margin-top: 8px; letter-spacing: .2px; }
 
     /* ─── SECTION COMMONS ─── */
     section { padding: 100px 6%; }
@@ -320,7 +324,7 @@
     .feat p  { font-size: .88rem; color: var(--muted); line-height: 1.72; }
 
     /* ─── HOW IT WORKS ─── */
-    .how { background: var(--gray-50); }
+    .how { background: #F0FDF4; }
     .how-head { text-align: center; margin-bottom: 72px; }
     .how-head .s-sub { margin: 0 auto; }
 
@@ -415,7 +419,7 @@
 
     /* ─── SECURITY ─── */
     .security {
-      background: linear-gradient(150deg, var(--green-deep) 0%, #065F46 60%, #047857 100%);
+      background: linear-gradient(150deg, #134E4A 0%, #065F46 55%, #047857 100%);
       padding: 100px 6%; text-align: center; position: relative; overflow: hidden;
     }
     .security::before {
@@ -507,7 +511,7 @@
 
     /* ─── FOOTER ─── */
     footer {
-      background: var(--green-deep);
+      background: #134E4A;
       padding: 56px 6% 36px;
     }
     .footer-inner {
