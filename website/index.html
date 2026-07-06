@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clinova — Offline Patient Records for Rural Health</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #1A5276;
+      --navy-dark:  #154360;
+      --navy-light: #D6EAF8;
+      --green:      #1A7A4A;
+      --green-mid:  #239B56;
+      --green-light:#D5F5E3;
+      --teal:       #148F77;
+      --teal-light: #D1F2EB;
+      --white:      #FFFFFF;
+      --gray-50:    #F4F8FB;
+      --gray-100:   #E8EEF3;
+      --gray-200:   #CDD6DF;
+      --text:       #1C2833;
+      --muted:      #5D6D7E;
+      --radius:     12px;
+      --shadow:     0 4px 24px rgba(26,82,118,.10);
+      --shadow-lg:  0 12px 40px rgba(26,82,118,.16);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--navy);
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: -.3px;
+    }
+
+    .nav-logo .icon {
+      width: 36px; height: 36px;
+      background: var(--navy);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: var(--navy); }
+
+    .nav-cta {
+      background: var(--navy);
+      color: white !important;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: background .2s !important;
+    }
+
+    .nav-cta:hover { background: var(--navy-dark) !important; color: white !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--teal) 100%);
+      color: white;
+      padding: 96px 5% 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      min-height: 90vh;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge .dot {
+      width: 8px; height: 8px;
+      background: #2ECC71;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .6; transform: scale(.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -.5px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span { color: #82E0AA; }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.8);
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: white;
+      color: var(--navy);
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: .95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,.5);
+      color: white;
+      padding: 12px 26px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: .95rem;
+      text-decoration: none;
+      transition: background .2s, border-color .2s;
+    }
+
+    .btn-outline:hover { background: rgba(255,255,255,.1); border-color: white; }
+
+    /* App mockup */
+    .hero-mockup {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app-window {
+      background: white;
+      border-radius: 18px;
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,.1);
+      overflow: hidden;
+      width: 100%;
+      max-width: 360px;
+      color: var(--text);
+    }
+
+    .window-bar {
+      background: #F0F0F0;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid #E0E0E0;
+    }
+
+    .window-dot {
+      width: 11px; height: 11px; border-radius: 50%;
+    }
+
+    .wd-red   { background: #FF5F57; }
+    .wd-yell  { background: #FEBC2E; }
+    .wd-green { background: #28C840; }
+
+    .window-title {
+      flex: 1;
+      text-align: center;
+      font-size: .75rem;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .mock-header {
+      background: var(--navy);
+      padding: 28px 20px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mock-icon {
+      width: 50px; height: 50px;
+      background: rgba(255,255,255,.18);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      color: white;
+    }
+
+    .mock-header h3 { color: white; font-size: 1.2rem; font-weight: 800; }
+    .mock-header p  { color: rgba(255,255,255,.7); font-size: .75rem; }
+
+    .mock-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+
+    .mock-field {
+      background: var(--gray-50);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .82rem;
+      color: var(--muted);
+      border: 1px solid var(--gray-100);
+    }
+
+    .mock-field .fi { font-size: 14px; }
+
+    .mock-btn {
+      background: var(--navy);
+      color: white;
+      border-radius: 10px;
+      padding: 13px;
+      text-align: center;
+      font-size: .85rem;
+      font-weight: 700;
+    }
+
+    .mock-sync {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: .7rem;
+      color: var(--muted);
+      padding-bottom: 4px;
+    }
+
+    .sync-dot {
+      width: 7px; height: 7px;
+      background: #27AE60;
+      border-radius: 50%;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      background: var(--gray-50);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 36px 5%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+
+    .stat-item strong {
+      display: block;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .stat-item span {
+      font-size: .85rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 88px 5%; }
+
+    .section-tag {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--green);
+      background: var(--green-light);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--navy-dark);
+      letter-spacing: -.3px;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── FEATURES ── */
+    .features { background: white; }
+
+    .features-header { margin-bottom: 52px; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: 16px;
+      padding: 28px;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .feat-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+
+    .feat-icon.navy  { background: var(--navy-light);  }
+    .feat-icon.green { background: var(--green-light);  }
+    .feat-icon.teal  { background: var(--teal-light);   }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--gray-50); }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 52px;
+      position: relative;
+    }
+
+    .how-grid::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: calc(16.67% + 20px);
+      right: calc(16.67% + 20px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--navy-light), var(--teal-light));
+      z-index: 0;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-num {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 20px;
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .step:nth-child(1) .step-num { background: var(--navy);  color: white; }
+    .step:nth-child(2) .step-num { background: var(--teal);  color: white; }
+    .step:nth-child(3) .step-num { background: var(--green); color: white; }
+
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 8px;
+    }
+
+    .step p { font-size: .87rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── ROLES ── */
+    .roles { background: white; }
+
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 52px;
+    }
+
+    .role-card {
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .role-card:hover { transform: translateY(-4px); }
+
+    .role-card.r-nurse   { background: var(--navy-light);  border-color: #AED6F1; }
+    .role-card.r-doctor  { background: var(--green-light); border-color: #A9DFBF; }
+    .role-card.r-pharma  { background: var(--teal-light);  border-color: #A2D9CE; }
+    .role-card.r-lab     { background: #FEF9E7;            border-color: #F9E79F; }
+
+    .role-icon { font-size: 2.4rem; margin-bottom: 14px; display: block; }
+
+    .role-card h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 8px;
+    }
+
+    .role-card ul {
+      list-style: none;
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .role-card ul li::before { content: '✓ '; color: var(--green); font-weight: 700; }
+
+    /* ── SECURITY ── */
+    .security {
+      background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+      color: white;
+      padding: 80px 5%;
+      text-align: center;
+    }
+
+    .security .section-tag {
+      background: rgba(255,255,255,.15);
+      color: white;
+    }
+
+    .security .section-title { color: white; }
+    .security .section-sub   { color: rgba(255,255,255,.75); margin: 0 auto 48px; }
+
+    .sec-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .sec-pill {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: .88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      background: var(--green-light);
+      text-align: center;
+      padding: 96px 5%;
+    }
+
+    .cta .section-title { color: var(--navy-dark); }
+    .cta .section-sub   { color: var(--muted); margin: 0 auto 40px; }
+
+    .cta-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: white;
+      padding: 14px 30px;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: .95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background .2s, transform .2s;
+      box-shadow: 0 4px 16px rgba(26,122,74,.25);
+    }
+
+    .btn-green:hover { background: var(--green-mid); transform: translateY(-2px); }
+
+    .btn-navy {
+      background: var(--navy);
+      color: white;
+      padding: 14px 30px;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: .95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background .2s, transform .2s;
+    }
+
+    .btn-navy:hover { background: var(--navy-dark); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,.6);
+      padding: 48px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-decoration: none;
+    }
+
+    .footer-logo .icon {
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,.15);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,.5);
+      font-size: .85rem;
+      transition: color .2s;
+    }
+
+    .footer-links a:hover { color: white; }
+
+    .footer-copy { font-size: .82rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; padding: 72px 5% 60px; }
+      .hero p { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-mockup { display: none; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .how-grid { grid-template-columns: 1fr; }
+      .how-grid::before { display: none; }
+      .roles-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: 1fr; }
+      .roles-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="icon">✚</div>
+    Clinova
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#roles">Roles</a></li>
+    <li><a href="https://github.com/Meshack-Nartey/clinova" target="_blank">GitHub</a></li>
+    <li><a href="#download" class="nav-cta">Download</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Built for rural health outreach
+    </div>
+    <h1>Patient records that work <span>everywhere</span></h1>
+    <p>Clinova captures, stores, and syncs patient data without internet — purpose-built for outreach clinics, remote facilities, and mobile health teams in underserved communities.</p>
+    <div class="hero-actions">
+      <a href="#download" class="btn-primary">⬇ Download for Windows</a>
+      <a href="#features" class="btn-outline">See how it works</a>
+    </div>
+  </div>
+
+  <div class="hero-mockup">
+    <div class="app-window">
+      <div class="window-bar">
+        <div class="window-dot wd-red"></div>
+        <div class="window-dot wd-yell"></div>
+        <div class="window-dot wd-green"></div>
+        <div class="window-title">Clinova</div>
+      </div>
+      <div class="mock-header">
+        <div class="mock-icon">✚</div>
+        <h3>Clinova</h3>
+        <p>Offline patient records</p>
+      </div>
+      <div class="mock-body">
+        <div class="mock-field"><span class="fi">👤</span> Your name</div>
+        <div class="mock-field"><span class="fi">🔒</span> PIN ••••••</div>
+        <div class="mock-btn">Sign in</div>
+        <div class="mock-sync">
+          <div class="sync-dot"></div>
+          Synced · Local network
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats">
+  <div class="stat-item">
+    <strong>100%</strong>
+    <span>Offline capable</span>
+  </div>
+  <div class="stat-item">
+    <strong>4</strong>
+    <span>Clinical roles</span>
+  </div>
+  <div class="stat-item">
+    <strong>AES-256</strong>
+    <span>Encrypted storage</span>
+  </div>
+  <div class="stat-item">
+    <strong>3</strong>
+    <span>Platforms supported</span>
+  </div>
+</div>
+
+<!-- ── FEATURES ── -->
+<section class="features" id="features">
+  <div class="features-header">
+    <div class="section-tag">Features</div>
+    <h2 class="section-title">Everything a field clinic needs</h2>
+    <p class="section-sub">Designed around the real constraints of rural healthcare — no internet, limited devices, multiple staff roles.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feat-icon navy">📵</div>
+      <h3>Fully Offline</h3>
+      <p>Records are stored locally on-device using an encrypted SQLite database. No internet connection required — ever.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon teal">🔁</div>
+      <h3>Local Network Sync</h3>
+      <p>Devices on the same Wi-Fi or hotspot sync automatically via an embedded server. No cloud, no data plan.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon green">🔐</div>
+      <h3>AES-256 Encryption</h3>
+      <p>All patient data is encrypted at rest with SQLCipher. PIN-based access ensures only authorised staff can log in.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon navy">👥</div>
+      <h3>Role-Based Access</h3>
+      <p>Nurses, doctors, pharmacists, and lab staff each see exactly what they need — nothing more, nothing less.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon green">📄</div>
+      <h3>CSV & PDF Export</h3>
+      <p>Export patient records and session data as CSV for analysis or PDF for printed reports — directly from the app.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon teal">💻</div>
+      <h3>Cross-Platform</h3>
+      <p>Runs natively on Windows, macOS, and Android. One codebase, consistent experience across every device your team has.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how" id="how">
+  <div style="text-align:center">
+    <div class="section-tag">How it works</div>
+    <h2 class="section-title">Simple. Even without signal.</h2>
+    <p class="section-sub" style="margin:0 auto">Set up takes minutes. The workflow follows your team's natural flow.</p>
+  </div>
+  <div class="how-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Nurse registers a patient</h3>
+      <p>Captures demographics, chief complaint, and vitals. All validated and stored instantly on-device.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Doctor consults & prescribes</h3>
+      <p>Reviews the intake record, documents diagnosis, and prescribes treatment — all from their own device.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Pharmacy & lab complete care</h3>
+      <p>Pharmacist dispenses medication; lab records results. All devices sync automatically on the same network.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROLES ── -->
+<section class="roles" id="roles">
+  <div style="text-align:center; margin-bottom:0">
+    <div class="section-tag">Built for your whole team</div>
+    <h2 class="section-title">Every role, one platform</h2>
+    <p class="section-sub" style="margin:0 auto">Each staff member logs in with their role — the interface adapts to show only what's relevant to them.</p>
+  </div>
+  <div class="roles-grid">
+    <div class="role-card r-nurse">
+      <span class="role-icon">🩺</span>
+      <h3>Nurse</h3>
+      <ul>
+        <li>Register patients</li>
+        <li>Record vitals</li>
+        <li>Edit intake forms</li>
+      </ul>
+    </div>
+    <div class="role-card r-doctor">
+      <span class="role-icon">👨‍⚕️</span>
+      <h3>Doctor</h3>
+      <ul>
+        <li>View intake records</li>
+        <li>Document diagnosis</li>
+        <li>Write prescriptions</li>
+      </ul>
+    </div>
+    <div class="role-card r-pharma">
+      <span class="role-icon">💊</span>
+      <h3>Pharmacist</h3>
+      <ul>
+        <li>View prescriptions</li>
+        <li>Record dispensing</li>
+        <li>Track medication</li>
+      </ul>
+    </div>
+    <div class="role-card r-lab">
+      <span class="role-icon">🔬</span>
+      <h3>Lab Technician</h3>
+      <ul>
+        <li>Receive test requests</li>
+        <li>Record lab results</li>
+        <li>Attach findings</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECURITY ── -->
+<section class="security">
+  <div class="section-tag">Security & Privacy</div>
+  <h2 class="section-title">Patient data stays where it should</h2>
+  <p class="section-sub">No cloud servers. No third-party analytics. Your patients' data lives only on your devices — encrypted and under your control.</p>
+  <div class="sec-pills">
+    <div class="sec-pill">🔒 AES-256 SQLCipher encryption</div>
+    <div class="sec-pill">📵 Zero cloud dependency</div>
+    <div class="sec-pill">🔑 PIN-based authentication</div>
+    <div class="sec-pill">🏥 Role-gated access</div>
+    <div class="sec-pill">📡 LAN-only sync</div>
+    <div class="sec-pill">🧾 Audit-ready export</div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta" id="download">
+  <div class="section-tag">Get started</div>
+  <h2 class="section-title">Ready to take Clinova to the field?</h2>
+  <p class="section-sub">Download the Windows build or explore the source code on GitHub.</p>
+  <div class="cta-actions">
+    <a href="https://github.com/Meshack-Nartey/clinova/actions" target="_blank" class="btn-green">⬇ Download Windows Build</a>
+    <a href="https://github.com/Meshack-Nartey/clinova" target="_blank" class="btn-navy">⭐ View on GitHub</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a href="#" class="footer-logo">
+    <div class="icon">✚</div>
+    Clinova
+  </a>
+  <ul class="footer-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#roles">Roles</a></li>
+    <li><a href="https://github.com/Meshack-Nartey/clinova" target="_blank">GitHub</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Clinova · Built for rural health outreach</p>
+</footer>
+
+</body>
+</html>
