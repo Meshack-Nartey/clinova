@@ -233,7 +233,7 @@
     /* ─── STATS ─── */
     .stats {
       background: var(--navy); padding: 40px 6%;
-      display: grid; grid-template-columns: repeat(4, 1fr);
+      display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 24px; text-align: center;
     }
     .stat-num {
@@ -345,7 +345,7 @@
     .roles { background: white; }
     .roles-head { margin-bottom: 56px; }
 
-    .roles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .roles-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
 
     .role {
       border-radius: 18px; padding: 30px 22px; text-align: center;
@@ -553,9 +553,8 @@
 <!-- ─── STATS ─── -->
 <div class="stats">
   <div><div class="stat-num">100%</div><div class="stat-lbl">Offline capable</div></div>
-  <div><div class="stat-num">4</div><div class="stat-lbl">Clinical roles</div></div>
+  <div><div class="stat-num">5</div><div class="stat-lbl">Clinical roles</div></div>
   <div><div class="stat-num">AES‑256</div><div class="stat-lbl">Encrypted at rest</div></div>
-  <div><div class="stat-num">3</div><div class="stat-lbl">Platforms</div></div>
 </div>
 
 <!-- ─── FEATURES ─── -->
@@ -667,6 +666,15 @@
         <li>Receive test requests</li>
         <li>Record lab results</li>
         <li>Attach findings</li>
+      </ul>
+    </div>
+    <div class="role r1">
+      <div class="role-badge">🌍</div>
+      <h3>Community Health Worker</h3>
+      <ul>
+        <li>Register community members</li>
+        <li>Conduct screenings</li>
+        <li>Record field observations</li>
       </ul>
     </div>
   </div>
