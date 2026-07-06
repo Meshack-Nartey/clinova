@@ -6,660 +6,490 @@
   <title>Clinova — Offline Patient Records for Rural Health</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:       #1A5276;
-      --navy-dark:  #154360;
-      --navy-light: #D6EAF8;
-      --green:      #1A7A4A;
-      --green-mid:  #239B56;
-      --green-light:#D5F5E3;
-      --teal:       #148F77;
-      --teal-light: #D1F2EB;
-      --white:      #FFFFFF;
-      --gray-50:    #F4F8FB;
-      --gray-100:   #E8EEF3;
-      --gray-200:   #CDD6DF;
-      --text:       #1C2833;
-      --muted:      #5D6D7E;
-      --radius:     12px;
-      --shadow:     0 4px 24px rgba(26,82,118,.10);
-      --shadow-lg:  0 12px 40px rgba(26,82,118,.16);
+      --navy:        #0D2137;
+      --navy-mid:    #1A5276;
+      --teal:        #0EA5A0;
+      --teal-light:  #CCFBF1;
+      --green:       #10B981;
+      --green-dark:  #047857;
+      --green-light: #ECFDF5;
+      --sky:         #EFF6FF;
+      --white:       #FFFFFF;
+      --gray-50:     #F8FAFC;
+      --gray-100:    #F1F5F9;
+      --gray-200:    #E2E8F0;
+      --text:        #0F172A;
+      --muted:       #64748B;
+      --radius:      14px;
+      --shadow-sm:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:      0 4px 20px rgba(13,33,55,.08);
+      --shadow-lg:   0 20px 60px rgba(13,33,55,.14);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       color: var(--text);
       background: var(--white);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV ── */
+    /* ─── NAV ─── */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--gray-100);
-      padding: 0 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 6%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
     }
 
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--navy);
-      font-weight: 800;
-      font-size: 1.2rem;
-      letter-spacing: -.3px;
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--navy);
+      font-weight: 800; font-size: 1.2rem; letter-spacing: -.3px;
     }
 
-    .nav-logo .icon {
-      width: 36px; height: 36px;
-      background: var(--navy);
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      color: white;
-      font-size: 18px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 36px; list-style: none; }
     .nav-links a {
-      text-decoration: none;
-      color: var(--muted);
-      font-size: .9rem;
-      font-weight: 500;
-      transition: color .2s;
+      text-decoration: none; color: var(--muted);
+      font-size: .9rem; font-weight: 500; transition: color .18s;
     }
-
     .nav-links a:hover { color: var(--navy); }
-
     .nav-cta {
-      background: var(--navy);
-      color: white !important;
-      padding: 8px 20px;
-      border-radius: 8px;
-      font-weight: 600 !important;
-      transition: background .2s !important;
+      background: var(--navy) !important; color: white !important;
+      padding: 9px 22px; border-radius: 10px; font-weight: 700 !important;
+      transition: background .18s !important;
     }
+    .nav-cta:hover { background: var(--teal) !important; }
 
-    .nav-cta:hover { background: var(--navy-dark) !important; color: white !important; }
-
-    /* ── HERO ── */
+    /* ─── HERO ─── */
     .hero {
-      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--teal) 100%);
-      color: white;
-      padding: 72px 5% 64px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      min-height: auto;
+      background: var(--sky);
+      padding: 72px 6% 80px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 56px; align-items: center;
+      position: relative; overflow: hidden;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,.15);
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-size: .8rem;
-      font-weight: 600;
-      letter-spacing: .5px;
-      text-transform: uppercase;
-      margin-bottom: 24px;
+    /* decorative blobs */
+    .hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(14,165,160,.12) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -60px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(16,185,129,.08) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
     }
 
-    .hero-badge .dot {
-      width: 8px; height: 8px;
-      background: #2ECC71;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: white; border: 1px solid var(--gray-200);
+      border-radius: 999px; padding: 6px 14px 6px 8px;
+      font-size: .78rem; font-weight: 700; color: var(--navy-mid);
+      letter-spacing: .3px; margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
     }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: .6; transform: scale(.8); }
+    .eyebrow-dot {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--green-light);
+      display: grid; place-items: center; font-size: 11px;
     }
 
     .hero h1 {
-      font-size: clamp(2.2rem, 4vw, 3.4rem);
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -.5px;
-      margin-bottom: 20px;
+      font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+      font-weight: 900; line-height: 1.1; letter-spacing: -.6px;
+      color: var(--navy); margin-bottom: 18px;
     }
 
-    .hero h1 span { color: #82E0AA; }
-
-    .hero p {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,.8);
-      max-width: 480px;
-      margin-bottom: 36px;
-      line-height: 1.7;
+    .hero h1 .grad {
+      background: linear-gradient(135deg, var(--teal), var(--green));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 460px; margin-bottom: 36px; line-height: 1.75;
     }
 
-    .btn-primary {
-      background: white;
-      color: var(--navy);
-      padding: 14px 28px;
-      border-radius: var(--radius);
-      font-weight: 700;
-      font-size: .95rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+
+    .btn-solid {
+      background: var(--navy); color: white;
+      padding: 14px 28px; border-radius: 12px;
+      font-weight: 700; font-size: .95rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background .18s, transform .18s;
+      box-shadow: 0 4px 14px rgba(13,33,55,.25);
+    }
+    .btn-solid:hover { background: var(--teal); transform: translateY(-2px); }
+
+    .btn-ghost {
+      background: white; color: var(--navy);
+      padding: 13px 26px; border-radius: 12px;
+      font-weight: 600; font-size: .95rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1.5px solid var(--gray-200);
+      transition: border-color .18s, transform .18s;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-ghost:hover { border-color: var(--navy); transform: translateY(-2px); }
+
+    .trust-chips { display: flex; gap: 20px; flex-wrap: wrap; }
+    .trust-chip {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .82rem; color: var(--muted); font-weight: 500;
+    }
+    .trust-chip svg { flex-shrink: 0; }
+
+    /* ─── APP MOCKUP ─── */
+    .mockup-wrap {
+      display: flex; justify-content: center; align-items: center;
+      position: relative; z-index: 1;
     }
 
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
-
-    .btn-outline {
-      border: 2px solid rgba(255,255,255,.5);
-      color: white;
-      padding: 12px 26px;
-      border-radius: var(--radius);
-      font-weight: 600;
-      font-size: .95rem;
-      text-decoration: none;
-      transition: background .2s, border-color .2s;
+    .mockup-outer {
+      background: white; border-radius: 22px;
+      box-shadow: var(--shadow-lg), 0 0 0 1px var(--gray-200);
+      overflow: hidden; width: 100%; max-width: 340px;
     }
 
-    .btn-outline:hover { background: rgba(255,255,255,.1); border-color: white; }
+    .mockup-bar {
+      background: var(--gray-50); padding: 11px 16px;
+      display: flex; align-items: center; gap: 7px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .m-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .md-r { background: #FF5F57; }
+    .md-y { background: #FEBC2E; }
+    .md-g { background: #28C840; }
+    .m-title { flex: 1; text-align: center; font-size: .72rem; font-weight: 600; color: var(--muted); }
 
-    /* App mockup */
-    .hero-mockup {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .mockup-head {
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 60%, var(--teal) 100%);
+      padding: 30px 20px 24px; text-align: center;
+    }
+    .mock-logo-wrap {
+      width: 58px; height: 58px; border-radius: 50%;
+      background: rgba(255,255,255,.15); border: 2px solid rgba(255,255,255,.25);
+      display: grid; place-items: center; margin: 0 auto 12px;
+    }
+    .mockup-head h3 { color: white; font-size: 1.25rem; font-weight: 800; }
+    .mockup-head p  { color: rgba(255,255,255,.65); font-size: .75rem; margin-top: 3px; }
+
+    .mockup-body { padding: 20px; display: flex; flex-direction: column; gap: 11px; }
+
+    .m-field {
+      background: var(--gray-50); border: 1px solid var(--gray-200);
+      border-radius: 10px; padding: 11px 14px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: .82rem; color: var(--muted);
     }
 
-    .app-window {
-      background: white;
-      border-radius: 18px;
-      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,.1);
-      overflow: hidden;
-      width: 100%;
-      max-width: 360px;
-      color: var(--text);
+    .m-btn {
+      background: linear-gradient(135deg, var(--navy-mid), var(--teal));
+      color: white; border-radius: 10px; padding: 13px;
+      text-align: center; font-size: .85rem; font-weight: 700;
     }
 
-    .window-bar {
-      background: #F0F0F0;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      border-bottom: 1px solid #E0E0E0;
+    .m-status {
+      display: flex; justify-content: center; align-items: center; gap: 6px;
+      font-size: .7rem; color: var(--muted); padding-bottom: 2px;
     }
+    .m-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
 
-    .window-dot {
-      width: 11px; height: 11px; border-radius: 50%;
+    /* floating stat cards */
+    .float-card {
+      position: absolute; background: white;
+      border-radius: 14px; padding: 12px 16px;
+      box-shadow: var(--shadow-lg); border: 1px solid var(--gray-200);
+      display: flex; align-items: center; gap: 10px;
+      font-size: .8rem; font-weight: 600; color: var(--navy);
+      white-space: nowrap; z-index: 2;
     }
-
-    .wd-red   { background: #FF5F57; }
-    .wd-yell  { background: #FEBC2E; }
-    .wd-green { background: #28C840; }
-
-    .window-title {
-      flex: 1;
-      text-align: center;
-      font-size: .75rem;
-      font-weight: 600;
-      color: #666;
+    .float-card .fc-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: grid; place-items: center; font-size: 16px; flex-shrink: 0;
     }
+    .float-card .fc-sub { font-size: .68rem; color: var(--muted); font-weight: 400; }
+    .fc-1 { top: 30px; right: -20px; }
+    .fc-2 { bottom: 40px; left: -20px; }
 
-    .mock-header {
-      background: var(--navy);
-      padding: 28px 20px 22px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .mock-icon {
-      width: 50px; height: 50px;
-      background: rgba(255,255,255,.18);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      color: white;
-    }
-
-    .mock-header h3 { color: white; font-size: 1.2rem; font-weight: 800; }
-    .mock-header p  { color: rgba(255,255,255,.7); font-size: .75rem; }
-
-    .mock-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-
-    .mock-field {
-      background: var(--gray-50);
-      border-radius: 10px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: .82rem;
-      color: var(--muted);
-      border: 1px solid var(--gray-100);
-    }
-
-    .mock-field .fi { font-size: 14px; }
-
-    .mock-btn {
-      background: var(--navy);
-      color: white;
-      border-radius: 10px;
-      padding: 13px;
-      text-align: center;
-      font-size: .85rem;
-      font-weight: 700;
-    }
-
-    .mock-sync {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: .7rem;
-      color: var(--muted);
-      padding-bottom: 4px;
-    }
-
-    .sync-dot {
-      width: 7px; height: 7px;
-      background: #27AE60;
-      border-radius: 50%;
-    }
-
-    /* ── STATS ── */
+    /* ─── STATS ─── */
     .stats {
-      background: var(--gray-50);
-      border-bottom: 1px solid var(--gray-100);
-      padding: 36px 5%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      text-align: center;
+      background: var(--navy); padding: 40px 6%;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 24px; text-align: center;
+    }
+    .stat-num {
+      font-size: 2.2rem; font-weight: 900; color: white;
+      background: linear-gradient(135deg, white, var(--teal-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-lbl { font-size: .82rem; color: rgba(255,255,255,.55); font-weight: 500; margin-top: 4px; }
+
+    /* ─── SECTION COMMONS ─── */
+    section { padding: 96px 6%; }
+
+    .s-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .75rem; font-weight: 700; letter-spacing: .8px;
+      text-transform: uppercase; color: var(--green-dark);
+      background: var(--green-light); padding: 5px 13px;
+      border-radius: 999px; margin-bottom: 14px;
     }
 
-    .stat-item strong {
-      display: block;
-      font-size: 1.9rem;
-      font-weight: 800;
-      color: var(--navy);
-    }
-
-    .stat-item span {
-      font-size: .85rem;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    /* ── SECTION COMMONS ── */
-    section { padding: 88px 5%; }
-
-    .section-tag {
-      display: inline-block;
-      font-size: .78rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--green);
-      background: var(--green-light);
-      padding: 4px 12px;
-      border-radius: 999px;
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-size: clamp(1.7rem, 3vw, 2.4rem);
-      font-weight: 800;
-      color: var(--navy-dark);
-      letter-spacing: -.3px;
+    .s-title {
+      font-size: clamp(1.9rem, 3vw, 2.6rem); font-weight: 900;
+      color: var(--navy); letter-spacing: -.4px; line-height: 1.15;
       margin-bottom: 12px;
     }
-
-    .section-sub {
-      font-size: 1rem;
-      color: var(--muted);
-      max-width: 560px;
-      line-height: 1.7;
+    .s-title .grad {
+      background: linear-gradient(135deg, var(--teal), var(--green));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* ── FEATURES ── */
+    .s-sub {
+      font-size: .98rem; color: var(--muted); max-width: 560px; line-height: 1.75;
+    }
+
+    /* ─── FEATURES ─── */
     .features { background: white; }
 
-    .features-header { margin-bottom: 52px; }
+    .features-head { margin-bottom: 56px; }
 
     .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
     }
 
-    .feature-card {
-      background: var(--gray-50);
-      border: 1px solid var(--gray-100);
-      border-radius: 16px;
-      padding: 28px;
-      transition: transform .2s, box-shadow .2s;
+    .feat {
+      border: 1.5px solid var(--gray-200); border-radius: 18px;
+      padding: 30px; background: white;
+      transition: transform .22s, box-shadow .22s, border-color .22s;
+      position: relative; overflow: hidden;
     }
-
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow);
+    .feat::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      opacity: 0; transition: opacity .22s;
     }
+    .feat:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: transparent; }
+    .feat:hover::before { opacity: 1; }
 
-    .feat-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      margin-bottom: 18px;
+    .feat.c-navy::before  { background: linear-gradient(90deg, var(--navy-mid), var(--teal)); }
+    .feat.c-green::before { background: linear-gradient(90deg, var(--green), var(--teal)); }
+    .feat.c-teal::before  { background: linear-gradient(90deg, var(--teal), var(--green)); }
+
+    .feat-ico {
+      width: 54px; height: 54px; border-radius: 16px;
+      display: grid; place-items: center; font-size: 26px; margin-bottom: 20px;
     }
+    .feat.c-navy .feat-ico  { background: var(--sky); }
+    .feat.c-green .feat-ico { background: var(--green-light); }
+    .feat.c-teal .feat-ico  { background: var(--teal-light); }
 
-    .feat-icon.navy  { background: var(--navy-light);  }
-    .feat-icon.green { background: var(--green-light);  }
-    .feat-icon.teal  { background: var(--teal-light);   }
+    .feat h3 { font-size: 1.02rem; font-weight: 700; color: var(--navy); margin-bottom: 9px; }
+    .feat p  { font-size: .87rem; color: var(--muted); line-height: 1.7; }
 
-    .feature-card h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--navy-dark);
-      margin-bottom: 8px;
-    }
-
-    .feature-card p {
-      font-size: .88rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* ── HOW IT WORKS ── */
+    /* ─── HOW IT WORKS ─── */
     .how { background: var(--gray-50); }
 
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-      margin-top: 52px;
-      position: relative;
-    }
+    .how-head { text-align: center; margin-bottom: 64px; }
+    .how-head .s-sub { margin: 0 auto; }
 
-    .how-grid::before {
-      content: '';
-      position: absolute;
-      top: 36px;
-      left: calc(16.67% + 20px);
-      right: calc(16.67% + 20px);
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; position: relative;
+    }
+    .steps::before {
+      content: ''; position: absolute;
+      top: 44px; left: calc(16.67% + 24px); right: calc(16.67% + 24px);
       height: 2px;
-      background: linear-gradient(90deg, var(--navy-light), var(--teal-light));
+      background: linear-gradient(90deg, var(--navy-mid), var(--teal), var(--green));
       z-index: 0;
     }
 
-    .step {
-      text-align: center;
-      position: relative;
-      z-index: 1;
+    .step { text-align: center; padding: 0 24px; position: relative; z-index: 1; }
+
+    .step-circle {
+      width: 88px; height: 88px; border-radius: 50%;
+      margin: 0 auto 24px;
+      display: grid; place-items: center;
+      font-size: 1.6rem; font-weight: 900; color: white;
+      box-shadow: 0 8px 24px rgba(13,33,55,.2);
     }
+    .step:nth-child(1) .step-circle { background: linear-gradient(135deg, var(--navy), var(--navy-mid)); }
+    .step:nth-child(2) .step-circle { background: linear-gradient(135deg, var(--navy-mid), var(--teal)); }
+    .step:nth-child(3) .step-circle { background: linear-gradient(135deg, var(--teal), var(--green)); }
 
-    .step-num {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 20px;
-      font-size: 1.4rem;
-      font-weight: 800;
-    }
+    .step h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 9px; }
+    .step p  { font-size: .87rem; color: var(--muted); line-height: 1.7; }
 
-    .step:nth-child(1) .step-num { background: var(--navy);  color: white; }
-    .step:nth-child(2) .step-num { background: var(--teal);  color: white; }
-    .step:nth-child(3) .step-num { background: var(--green); color: white; }
-
-    .step h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--navy-dark);
-      margin-bottom: 8px;
-    }
-
-    .step p { font-size: .87rem; color: var(--muted); line-height: 1.65; }
-
-    /* ── ROLES ── */
+    /* ─── ROLES ─── */
     .roles { background: white; }
+    .roles-head { margin-bottom: 56px; }
 
-    .roles-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-top: 52px;
+    .roles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+    .role {
+      border-radius: 18px; padding: 30px 22px; text-align: center;
+      transition: transform .22s;
+      border: 1.5px solid transparent;
     }
+    .role:hover { transform: translateY(-5px); }
 
-    .role-card {
-      border-radius: 16px;
-      padding: 28px 22px;
-      text-align: center;
-      border: 2px solid transparent;
-      transition: transform .2s, border-color .2s;
+    .role.r1 { background: #EFF6FF; border-color: #BFDBFE; }
+    .role.r2 { background: var(--green-light); border-color: #A7F3D0; }
+    .role.r3 { background: var(--teal-light); border-color: #99F6E4; }
+    .role.r4 { background: #FFF7ED; border-color: #FED7AA; }
+
+    .role-badge {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: grid; place-items: center; font-size: 1.8rem;
+      margin: 0 auto 16px;
     }
+    .role.r1 .role-badge { background: #DBEAFE; }
+    .role.r2 .role-badge { background: #D1FAE5; }
+    .role.r3 .role-badge { background: #CCFBF1; }
+    .role.r4 .role-badge { background: #FEE2E2; }
 
-    .role-card:hover { transform: translateY(-4px); }
+    .role h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
 
-    .role-card.r-nurse   { background: var(--navy-light);  border-color: #AED6F1; }
-    .role-card.r-doctor  { background: var(--green-light); border-color: #A9DFBF; }
-    .role-card.r-pharma  { background: var(--teal-light);  border-color: #A2D9CE; }
-    .role-card.r-lab     { background: #FEF9E7;            border-color: #F9E79F; }
+    .role ul { list-style: none; font-size: .82rem; color: var(--muted); line-height: 2; }
+    .role ul li { display: flex; align-items: center; justify-content: center; gap: 5px; }
+    .role ul li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--green); display: inline-block; flex-shrink: 0; }
 
-    .role-icon { font-size: 2.4rem; margin-bottom: 14px; display: block; }
-
-    .role-card h3 {
-      font-size: .95rem;
-      font-weight: 700;
-      color: var(--navy-dark);
-      margin-bottom: 8px;
-    }
-
-    .role-card ul {
-      list-style: none;
-      font-size: .82rem;
-      color: var(--muted);
-      line-height: 1.9;
-    }
-
-    .role-card ul li::before { content: '✓ '; color: var(--green); font-weight: 700; }
-
-    /* ── SECURITY ── */
+    /* ─── SECURITY ─── */
     .security {
-      background: linear-gradient(135deg, var(--navy-dark), var(--navy));
-      color: white;
-      padding: 80px 5%;
-      text-align: center;
+      background: linear-gradient(145deg, var(--navy) 0%, #0A2E4A 100%);
+      padding: 96px 6%; text-align: center;
+    }
+    .security .s-tag { background: rgba(255,255,255,.1); color: rgba(255,255,255,.75); }
+    .security .s-title { color: white; }
+    .security .s-sub   { color: rgba(255,255,255,.6); margin: 0 auto 52px; }
+
+    .sec-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 860px; margin: 0 auto;
     }
 
-    .security .section-tag {
-      background: rgba(255,255,255,.15);
-      color: white;
+    .sec-card {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px; padding: 24px; text-align: left;
+      transition: background .2s;
     }
+    .sec-card:hover { background: rgba(255,255,255,.1); }
 
-    .security .section-title { color: white; }
-    .security .section-sub   { color: rgba(255,255,255,.75); margin: 0 auto 48px; }
-
-    .sec-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: center;
+    .sec-card-icon {
+      font-size: 1.6rem; margin-bottom: 12px; display: block;
     }
+    .sec-card h4 { font-size: .9rem; font-weight: 700; color: white; margin-bottom: 6px; }
+    .sec-card p  { font-size: .8rem; color: rgba(255,255,255,.5); line-height: 1.65; }
 
-    .sec-pill {
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 999px;
-      padding: 10px 22px;
-      font-size: .88rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* ── CTA ── */
+    /* ─── CTA ─── */
     .cta {
-      background: var(--green-light);
-      text-align: center;
-      padding: 96px 5%;
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--teal) 100%);
+      padding: 96px 6%; text-align: center;
     }
+    .cta .s-tag { background: rgba(255,255,255,.2); color: white; }
+    .cta .s-title { color: white; }
+    .cta .s-sub   { color: rgba(255,255,255,.75); margin: 0 auto 44px; }
 
-    .cta .section-title { color: var(--navy-dark); }
-    .cta .section-sub   { color: var(--muted); margin: 0 auto 40px; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-    .cta-actions {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
+    .btn-white {
+      background: white; color: var(--green-dark);
+      padding: 15px 32px; border-radius: 12px;
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: transform .18s; box-shadow: 0 4px 20px rgba(0,0,0,.15);
     }
+    .btn-white:hover { transform: translateY(-3px); }
 
-    .btn-green {
-      background: var(--green);
-      color: white;
-      padding: 14px 30px;
-      border-radius: var(--radius);
-      font-weight: 700;
-      font-size: .95rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: background .2s, transform .2s;
-      box-shadow: 0 4px 16px rgba(26,122,74,.25);
+    .btn-outline-w {
+      border: 2px solid rgba(255,255,255,.6); color: white;
+      padding: 13px 30px; border-radius: 12px;
+      font-weight: 600; font-size: 1rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background .18s, border-color .18s;
     }
+    .btn-outline-w:hover { background: rgba(255,255,255,.12); border-color: white; }
 
-    .btn-green:hover { background: var(--green-mid); transform: translateY(-2px); }
-
-    .btn-navy {
-      background: var(--navy);
-      color: white;
-      padding: 14px 30px;
-      border-radius: var(--radius);
-      font-weight: 700;
-      font-size: .95rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: background .2s, transform .2s;
-    }
-
-    .btn-navy:hover { background: var(--navy-dark); transform: translateY(-2px); }
-
-    /* ── FOOTER ── */
+    /* ─── FOOTER ─── */
     footer {
-      background: var(--navy-dark);
-      color: rgba(255,255,255,.6);
-      padding: 48px 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
+      background: var(--navy); padding: 48px 6%;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
     }
 
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: white;
-      font-weight: 800;
-      font-size: 1.1rem;
-      text-decoration: none;
-    }
+    .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; font-weight: 800; font-size: 1.05rem; }
 
-    .footer-logo .icon {
-      width: 32px; height: 32px;
-      background: rgba(255,255,255,.15);
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      font-size: 16px;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
-    }
-
-    .footer-links a {
-      text-decoration: none;
-      color: rgba(255,255,255,.5);
-      font-size: .85rem;
-      transition: color .2s;
-    }
-
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a { text-decoration: none; color: rgba(255,255,255,.45); font-size: .85rem; transition: color .18s; }
     .footer-links a:hover { color: white; }
 
-    .footer-copy { font-size: .82rem; }
+    .footer-copy { font-size: .8rem; color: rgba(255,255,255,.35); }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; padding: 72px 5% 60px; }
-      .hero p { margin-left: auto; margin-right: auto; }
-      .hero-actions { justify-content: center; }
-      .hero-mockup { display: none; }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero-sub, .trust-chips { margin-left: auto; margin-right: auto; }
+      .hero-btns { justify-content: center; }
+      .trust-chips { justify-content: center; }
+      .mockup-wrap { display: none; }
       .stats { grid-template-columns: repeat(2, 1fr); }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
-      .how-grid { grid-template-columns: 1fr; }
-      .how-grid::before { display: none; }
+      .steps { grid-template-columns: 1fr; }
+      .steps::before { display: none; }
       .roles-grid { grid-template-columns: repeat(2, 1fr); }
+      .sec-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 560px) {
-      .stats { grid-template-columns: repeat(2, 1fr); }
       .features-grid { grid-template-columns: 1fr; }
       .roles-grid { grid-template-columns: 1fr; }
+      .sec-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
+<!-- ─── NAV ─── -->
 <nav>
-  <a href="#" class="nav-logo">
-    <div class="icon">✚</div>
+  <a href="#" class="logo">
+    <!-- SVG Logo -->
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="logoGrad" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#1A5276"/>
+          <stop offset="100%" stop-color="#0EA5A0"/>
+        </linearGradient>
+      </defs>
+      <rect width="38" height="38" rx="11" fill="url(#logoGrad)"/>
+      <!-- Cross -->
+      <rect x="16.5" y="9" width="5" height="20" rx="2.5" fill="white"/>
+      <rect x="9" y="16.5" width="20" height="5" rx="2.5" fill="white"/>
+      <!-- Heartbeat accent dot -->
+      <circle cx="30.5" cy="7.5" r="4" fill="#10B981"/>
+      <circle cx="30.5" cy="7.5" r="2" fill="white"/>
+    </svg>
     Clinova
   </a>
   <ul class="nav-links">
@@ -670,40 +500,81 @@
   </ul>
 </nav>
 
-<!-- ── HERO ── -->
+<!-- ─── HERO ─── -->
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="dot"></span>
-      Built for rural health outreach
+  <div>
+    <div class="hero-eyebrow">
+      <div class="eyebrow-dot">✚</div>
+      BUILT FOR RURAL HEALTH OUTREACH
     </div>
-    <h1>Patient records that work <span>everywhere</span></h1>
-    <p>Clinova captures, stores, and syncs patient data without internet — purpose-built for outreach clinics, remote facilities, and mobile health teams in underserved communities.</p>
-    <div class="hero-actions">
-      <a href="#download" class="btn-primary">⬇ Download for Windows</a>
-      <a href="#features" class="btn-outline">See how it works</a>
+    <h1>Patient records that<br>work <span class="grad">everywhere</span></h1>
+    <p class="hero-sub">Clinova captures, stores, and syncs patient data with no internet — purpose-built for outreach clinics, remote facilities, and mobile health teams.</p>
+    <div class="hero-btns">
+      <a href="#download" class="btn-solid">⬇ Download for Windows</a>
+      <a href="#features" class="btn-ghost">See how it works →</a>
+    </div>
+    <div class="trust-chips">
+      <span class="trust-chip">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#10B981"/><path d="M5 8l2 2 4-4" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        100% Offline
+      </span>
+      <span class="trust-chip">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#10B981"/><path d="M5 8l2 2 4-4" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        AES-256 Encrypted
+      </span>
+      <span class="trust-chip">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="#10B981"/><path d="M5 8l2 2 4-4" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Free & Open Source
+      </span>
     </div>
   </div>
 
-  <div class="hero-mockup">
-    <div class="app-window">
-      <div class="window-bar">
-        <div class="window-dot wd-red"></div>
-        <div class="window-dot wd-yell"></div>
-        <div class="window-dot wd-green"></div>
-        <div class="window-title">Clinova</div>
+  <div class="mockup-wrap">
+    <!-- Floating stat card top-right -->
+    <div class="float-card fc-1">
+      <div class="fc-icon" style="background:#EFF6FF">📋</div>
+      <div>
+        <div>12 patients today</div>
+        <div class="fc-sub">Outreach session active</div>
       </div>
-      <div class="mock-header">
-        <div class="mock-icon">✚</div>
+    </div>
+    <!-- Floating stat card bottom-left -->
+    <div class="float-card fc-2">
+      <div class="fc-icon" style="background:#ECFDF5">🔁</div>
+      <div>
+        <div>Synced across 3 devices</div>
+        <div class="fc-sub">Local network · No internet</div>
+      </div>
+    </div>
+
+    <div class="mockup-outer">
+      <div class="mockup-bar">
+        <div class="m-dot md-r"></div>
+        <div class="m-dot md-y"></div>
+        <div class="m-dot md-g"></div>
+        <div class="m-title">Clinova</div>
+      </div>
+      <div class="mockup-head">
+        <div class="mock-logo-wrap">
+          <svg width="28" height="28" viewBox="0 0 38 38" fill="none">
+            <rect width="38" height="38" rx="11" fill="rgba(255,255,255,0.2)"/>
+            <rect x="16.5" y="9" width="5" height="20" rx="2.5" fill="white"/>
+            <rect x="9" y="16.5" width="20" height="5" rx="2.5" fill="white"/>
+          </svg>
+        </div>
         <h3>Clinova</h3>
         <p>Offline patient records</p>
       </div>
-      <div class="mock-body">
-        <div class="mock-field"><span class="fi">👤</span> Your name</div>
-        <div class="mock-field"><span class="fi">🔒</span> PIN ••••••</div>
-        <div class="mock-btn">Sign in</div>
-        <div class="mock-sync">
-          <div class="sync-dot"></div>
+      <div class="mockup-body">
+        <div class="m-field">
+          <span>👤</span> Your name
+        </div>
+        <div class="m-field">
+          <span>🔒</span> PIN ••••••
+        </div>
+        <div class="m-btn">Sign in</div>
+        <div class="m-status">
+          <div class="m-status-dot"></div>
           Synced · Local network
         </div>
       </div>
@@ -711,103 +582,91 @@
   </div>
 </section>
 
-<!-- ── STATS ── -->
+<!-- ─── STATS ─── -->
 <div class="stats">
-  <div class="stat-item">
-    <strong>100%</strong>
-    <span>Offline capable</span>
-  </div>
-  <div class="stat-item">
-    <strong>4</strong>
-    <span>Clinical roles</span>
-  </div>
-  <div class="stat-item">
-    <strong>AES-256</strong>
-    <span>Encrypted storage</span>
-  </div>
-  <div class="stat-item">
-    <strong>3</strong>
-    <span>Platforms supported</span>
-  </div>
+  <div><div class="stat-num">100%</div><div class="stat-lbl">Offline capable</div></div>
+  <div><div class="stat-num">4</div><div class="stat-lbl">Clinical roles</div></div>
+  <div><div class="stat-num">AES‑256</div><div class="stat-lbl">Encrypted at rest</div></div>
+  <div><div class="stat-num">3</div><div class="stat-lbl">Platforms</div></div>
 </div>
 
-<!-- ── FEATURES ── -->
+<!-- ─── FEATURES ─── -->
 <section class="features" id="features">
-  <div class="features-header">
-    <div class="section-tag">Features</div>
-    <h2 class="section-title">Everything a field clinic needs</h2>
-    <p class="section-sub">Designed around the real constraints of rural healthcare — no internet, limited devices, multiple staff roles.</p>
+  <div class="features-head">
+    <div class="s-tag">✦ Features</div>
+    <h2 class="s-title">Everything a field clinic needs</h2>
+    <p class="s-sub">Designed around real constraints — no internet, limited devices, multiple staff roles, and patients who can't wait.</p>
   </div>
   <div class="features-grid">
-    <div class="feature-card">
-      <div class="feat-icon navy">📵</div>
+    <div class="feat c-navy">
+      <div class="feat-ico">📵</div>
       <h3>Fully Offline</h3>
-      <p>Records are stored locally on-device using an encrypted SQLite database. No internet connection required — ever.</p>
+      <p>Records are stored locally on-device using an encrypted SQLite database. No internet required — ever.</p>
     </div>
-    <div class="feature-card">
-      <div class="feat-icon teal">🔁</div>
+    <div class="feat c-teal">
+      <div class="feat-ico">🔁</div>
       <h3>Local Network Sync</h3>
-      <p>Devices on the same Wi-Fi or hotspot sync automatically via an embedded server. No cloud, no data plan.</p>
+      <p>Devices sync automatically over the same Wi-Fi or hotspot via an embedded server. No cloud, no data plan.</p>
     </div>
-    <div class="feature-card">
-      <div class="feat-icon green">🔐</div>
+    <div class="feat c-green">
+      <div class="feat-ico">🔐</div>
       <h3>AES-256 Encryption</h3>
-      <p>All patient data is encrypted at rest with SQLCipher. PIN-based access ensures only authorised staff can log in.</p>
+      <p>All patient data is encrypted at rest with SQLCipher. PIN-based access ensures only authorised staff log in.</p>
     </div>
-    <div class="feature-card">
-      <div class="feat-icon navy">👥</div>
+    <div class="feat c-green">
+      <div class="feat-ico">👥</div>
       <h3>Role-Based Access</h3>
-      <p>Nurses, doctors, pharmacists, and lab staff each see exactly what they need — nothing more, nothing less.</p>
+      <p>Nurses, doctors, pharmacists, and lab staff see exactly what they need — nothing more, nothing less.</p>
     </div>
-    <div class="feature-card">
-      <div class="feat-icon green">📄</div>
+    <div class="feat c-navy">
+      <div class="feat-ico">📄</div>
       <h3>CSV & PDF Export</h3>
-      <p>Export patient records and session data as CSV for analysis or PDF for printed reports — directly from the app.</p>
+      <p>Export patient records as CSV for analysis or PDF for printed reports — directly from the app.</p>
     </div>
-    <div class="feature-card">
-      <div class="feat-icon teal">💻</div>
+    <div class="feat c-teal">
+      <div class="feat-ico">💻</div>
       <h3>Cross-Platform</h3>
-      <p>Runs natively on Windows, macOS, and Android. One codebase, consistent experience across every device your team has.</p>
+      <p>Runs natively on Windows, macOS, and Android. One app, consistent experience across your team's devices.</p>
     </div>
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ── -->
+<!-- ─── HOW IT WORKS ─── -->
 <section class="how" id="how">
-  <div style="text-align:center">
-    <div class="section-tag">How it works</div>
-    <h2 class="section-title">Simple. Even without signal.</h2>
-    <p class="section-sub" style="margin:0 auto">Set up takes minutes. The workflow follows your team's natural flow.</p>
+  <div class="how-head">
+    <div class="s-tag">✦ How it works</div>
+    <h2 class="s-title">Simple. Even <span class="grad">without signal.</span></h2>
+    <p class="s-sub">Set up takes minutes. The workflow follows your team's natural flow from intake to dispensing.</p>
   </div>
-  <div class="how-grid">
+  <div class="steps">
     <div class="step">
-      <div class="step-num">1</div>
+      <div class="step-circle">1</div>
       <h3>Nurse registers a patient</h3>
-      <p>Captures demographics, chief complaint, and vitals. All validated and stored instantly on-device.</p>
+      <p>Captures demographics, chief complaint, and vitals. All validated and stored on-device instantly.</p>
     </div>
     <div class="step">
-      <div class="step-num">2</div>
+      <div class="step-circle">2</div>
       <h3>Doctor consults & prescribes</h3>
-      <p>Reviews the intake record, documents diagnosis, and prescribes treatment — all from their own device.</p>
+      <p>Reviews the intake record, documents diagnosis, and writes a prescription — on their own device.</p>
     </div>
     <div class="step">
-      <div class="step-num">3</div>
+      <div class="step-circle">3</div>
       <h3>Pharmacy & lab complete care</h3>
-      <p>Pharmacist dispenses medication; lab records results. All devices sync automatically on the same network.</p>
+      <p>Pharmacist dispenses medication; lab records results. All devices sync over the local network.</p>
     </div>
   </div>
 </section>
 
-<!-- ── ROLES ── -->
+<!-- ─── ROLES ─── -->
 <section class="roles" id="roles">
-  <div style="text-align:center; margin-bottom:0">
-    <div class="section-tag">Built for your whole team</div>
-    <h2 class="section-title">Every role, one platform</h2>
-    <p class="section-sub" style="margin:0 auto">Each staff member logs in with their role — the interface adapts to show only what's relevant to them.</p>
+  <div class="roles-head">
+    <div class="s-tag">✦ Built for your whole team</div>
+    <h2 class="s-title">Every role, <span class="grad">one platform</span></h2>
+    <p class="s-sub">Each staff member logs in with their role — the interface adapts to show only what's relevant to them.</p>
   </div>
   <div class="roles-grid">
-    <div class="role-card r-nurse">
-      <span class="role-icon">🩺</span>
+    <div class="role r1">
+      <div class="role-badge">🩺</div>
       <h3>Nurse</h3>
       <ul>
         <li>Register patients</li>
@@ -815,8 +674,8 @@
         <li>Edit intake forms</li>
       </ul>
     </div>
-    <div class="role-card r-doctor">
-      <span class="role-icon">👨‍⚕️</span>
+    <div class="role r2">
+      <div class="role-badge">👨‍⚕️</div>
       <h3>Doctor</h3>
       <ul>
         <li>View intake records</li>
@@ -824,8 +683,8 @@
         <li>Write prescriptions</li>
       </ul>
     </div>
-    <div class="role-card r-pharma">
-      <span class="role-icon">💊</span>
+    <div class="role r3">
+      <div class="role-badge">💊</div>
       <h3>Pharmacist</h3>
       <ul>
         <li>View prescriptions</li>
@@ -833,8 +692,8 @@
         <li>Track medication</li>
       </ul>
     </div>
-    <div class="role-card r-lab">
-      <span class="role-icon">🔬</span>
+    <div class="role r4">
+      <div class="role-badge">🔬</div>
       <h3>Lab Technician</h3>
       <ul>
         <li>Receive test requests</li>
@@ -845,36 +704,72 @@
   </div>
 </section>
 
-<!-- ── SECURITY ── -->
+<!-- ─── SECURITY ─── -->
 <section class="security">
-  <div class="section-tag">Security & Privacy</div>
-  <h2 class="section-title">Patient data stays where it should</h2>
-  <p class="section-sub">No cloud servers. No third-party analytics. Your patients' data lives only on your devices — encrypted and under your control.</p>
-  <div class="sec-pills">
-    <div class="sec-pill">🔒 AES-256 SQLCipher encryption</div>
-    <div class="sec-pill">📵 Zero cloud dependency</div>
-    <div class="sec-pill">🔑 PIN-based authentication</div>
-    <div class="sec-pill">🏥 Role-gated access</div>
-    <div class="sec-pill">📡 LAN-only sync</div>
-    <div class="sec-pill">🧾 Audit-ready export</div>
+  <div class="s-tag">✦ Security & Privacy</div>
+  <h2 class="s-title">Patient data stays <span style="color:#10B981">where it belongs</span></h2>
+  <p class="s-sub">No cloud servers. No third-party analytics. Your patients' data lives only on your devices — encrypted and under your control.</p>
+  <div class="sec-grid">
+    <div class="sec-card">
+      <span class="sec-card-icon">🔒</span>
+      <h4>AES-256 Encryption</h4>
+      <p>Every record is encrypted at rest using SQLCipher. Data is unreadable without your PIN.</p>
+    </div>
+    <div class="sec-card">
+      <span class="sec-card-icon">📵</span>
+      <h4>Zero Cloud Dependency</h4>
+      <p>No servers, no accounts, no third-party services. Your data never leaves your devices.</p>
+    </div>
+    <div class="sec-card">
+      <span class="sec-card-icon">🔑</span>
+      <h4>PIN Authentication</h4>
+      <p>Each staff member has a hashed PIN. Access is role-gated and session-scoped.</p>
+    </div>
+    <div class="sec-card">
+      <span class="sec-card-icon">📡</span>
+      <h4>LAN-Only Sync</h4>
+      <p>Sync happens over the local network only. No data is transmitted over the internet.</p>
+    </div>
+    <div class="sec-card">
+      <span class="sec-card-icon">👥</span>
+      <h4>Role-Gated Access</h4>
+      <p>Staff only see screens and records relevant to their clinical role — nothing beyond.</p>
+    </div>
+    <div class="sec-card">
+      <span class="sec-card-icon">🧾</span>
+      <h4>Audit-Ready Export</h4>
+      <p>Export full session records as CSV or PDF for reporting, audits, and handover.</p>
+    </div>
   </div>
 </section>
 
-<!-- ── CTA ── -->
+<!-- ─── CTA ─── -->
 <section class="cta" id="download">
-  <div class="section-tag">Get started</div>
-  <h2 class="section-title">Ready to take Clinova to the field?</h2>
-  <p class="section-sub">Download the Windows build or get in touch with our team.</p>
-  <div class="cta-actions">
-    <a href="#" class="btn-green">⬇ Download Windows Build</a>
-    <a href="mailto:mknartey6@st.knust.edu.gh" class="btn-navy">✉ Contact Us</a>
+  <div class="s-tag">✦ Get started today</div>
+  <h2 class="s-title">Ready to take Clinova<br>to the field?</h2>
+  <p class="s-sub">Download the Windows build and start managing patient records on your next outreach — no setup, no internet needed.</p>
+  <div class="cta-btns">
+    <a href="#" class="btn-white">⬇ Download for Windows</a>
+    <a href="mailto:mknartey6@st.knust.edu.gh" class="btn-outline-w">✉ Contact the team</a>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- ─── FOOTER ─── -->
 <footer>
   <a href="#" class="footer-logo">
-    <div class="icon">✚</div>
+    <svg width="30" height="30" viewBox="0 0 38 38" fill="none">
+      <defs>
+        <linearGradient id="fg" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#1A5276"/>
+          <stop offset="100%" stop-color="#0EA5A0"/>
+        </linearGradient>
+      </defs>
+      <rect width="38" height="38" rx="11" fill="url(#fg)"/>
+      <rect x="16.5" y="9" width="5" height="20" rx="2.5" fill="white"/>
+      <rect x="9" y="16.5" width="20" height="5" rx="2.5" fill="white"/>
+      <circle cx="30.5" cy="7.5" r="4" fill="#10B981"/>
+      <circle cx="30.5" cy="7.5" r="2" fill="white"/>
+    </svg>
     Clinova
   </a>
   <ul class="footer-links">
