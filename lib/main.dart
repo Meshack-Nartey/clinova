@@ -20,12 +20,9 @@ class ClinovaApp extends ConsumerWidget {
 
     return dbAsync.when(
       data: (db) {
-        // Seed default team accounts on first run (no-op if they already exist)
+        // Seed the Admin account on first run only (no-op if already exists).
+        // All other staff are registered through the Manage Staff screen.
         AuthService(db).seedUsers([
-          (name: 'Nurse Abena', role: UserRole.nurse, pin: '1111'),
-          (name: 'Dr. Kwame', role: UserRole.doctor, pin: '2222'),
-          (name: 'Pharmacist Esi', role: UserRole.pharmacist, pin: '3333'),
-          (name: 'Lab Tech Kofi', role: UserRole.lab, pin: '4444'),
           (name: 'Admin', role: UserRole.admin, pin: '0000'),
         ]);
 

@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.aethelis" "\0"
-            VALUE "FileDescription", "aethelis_health" "\0"
+            VALUE "CompanyName", "Clinova" "\0"
+            VALUE "FileDescription", "Clinova" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "aethelis_health" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 com.aethelis. All rights reserved." "\0"
-            VALUE "OriginalFilename", "aethelis_health.exe" "\0"
-            VALUE "ProductName", "aethelis_health" "\0"
+            VALUE "InternalName", "Clinova" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Clinova. All rights reserved." "\0"
+            VALUE "OriginalFilename", "Clinova.exe" "\0"
+            VALUE "ProductName", "Clinova" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
