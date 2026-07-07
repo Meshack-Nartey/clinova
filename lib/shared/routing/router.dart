@@ -38,22 +38,24 @@ final routerProvider = Provider<GoRouter>((ref) {
       final session = ref.read(sessionProvider);
       final loc = state.matchedLocation;
 
-      // Wait for both to load
+      // Wait for providers to initialise
       if (clinicName is AsyncLoading || session is AsyncLoading) return null;
 
-      // First-run: no clinic name set yet → go to setup
-      if (clinicName.valueOrNull == null && loc != routeSetup) return routeSetup;
+      // First-run: clinic not configured — only /setup is allowed
+      if (clinicName.valueOrNull == null) {
+        return loc == routeSetup ? null : routeSetup;
+      }
 
-      // Clinic name set but still on setup → go to login
-      if (clinicName.valueOrNull != null && loc == routeSetup) return routeLogin;
+      // Clinic configured but still on setup → go to login
+      if (loc == routeSetup) return routeLogin;
 
-      // Not authenticated
+      // Not authenticated → go to login
       final authSession = session.valueOrNull;
       if (authSession == null) {
         return loc == routeLogin ? null : routeLogin;
       }
 
-      // Authenticated and on login → go home
+      // Authenticated and sitting on login → go home
       if (loc == routeLogin) return _homeForRole(authSession.role);
 
       return null;
