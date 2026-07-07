@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/auth/providers.dart';
 import '../../core/database/tables.dart';
+import '../../features/admin/staff_screen.dart';
 import '../../features/auth/login_screen.dart';
 import '../../features/consultation/consultation_screen.dart';
 import '../../features/dashboard/dashboard_screen.dart';
@@ -21,6 +22,7 @@ const routeConsultation = '/consultation/:patientId';
 const routePharmacy = '/pharmacy/:patientId';
 const routeLab = '/lab/:patientId';
 const routeSearch = '/search';
+const routeStaff = '/staff';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final sessionNotifier = ref.watch(sessionProvider.notifier);
@@ -47,6 +49,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: routeLogin, builder: (ctx, _) => const LoginScreen()),
       GoRoute(path: routeDashboard, builder: (ctx, _) => const DashboardScreen()),
       GoRoute(path: routeSearch, builder: (ctx, _) => const SearchScreen()),
+      GoRoute(path: routeStaff, builder: (ctx, _) => const StaffScreen()),
       GoRoute(
         path: routeIntake,
         builder: (ctx, _) => const IntakeScreen(patientId: null),
@@ -74,8 +77,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 String _homeForRole(UserRole role) => switch (role) {
-      UserRole.admin || UserRole.doctor => routeDashboard,
-      UserRole.nurse => routeIntake,
+      UserRole.admin || UserRole.doctor || UserRole.nurse => routeDashboard,
       UserRole.pharmacist => routeSearch,
       UserRole.lab => routeSearch,
     };

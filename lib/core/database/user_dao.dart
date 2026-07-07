@@ -24,6 +24,16 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
 
   Future<List<User>> getAllUsers() => select(users).get();
 
+  Stream<List<User>> watchAllUsers() =>
+      (select(users)..orderBy([(u) => OrderingTerm.asc(u.createdAt)])).watch();
+
+  Future<void> deleteUser(String id) =>
+      (delete(users)..where((u) => u.id.equals(id))).go();
+
+  Future<void> updateUserPin(String id, String pinHash) =>
+      (update(users)..where((u) => u.id.equals(id)))
+          .write(UsersCompanion(pinHash: Value(pinHash)));
+
   Future<String> createUser({
     required String name,
     required UserRole role,

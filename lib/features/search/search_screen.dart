@@ -81,5 +81,5 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       };
 
   bool _canGoBack(UserRole? role) =>
-      role == UserRole.admin || role == UserRole.doctor;
+      role == UserRole.admin || role == UserRole.doctor || role == UserRole.nurse;
 }

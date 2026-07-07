@@ -90,6 +90,7 @@ class _LabScreenState extends ConsumerState<LabScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(onPressed: () => context.go(routeDashboard)),
         title: patientAsync.whenOrNull(data: (p) => Text(p?.fullName ?? 'Lab results')) ??
             const Text('Lab results'),
         actions: const [SyncStatusBadge(), SizedBox(width: 16)],

@@ -124,6 +124,7 @@ class _PharmacyScreenState extends ConsumerState<PharmacyScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(onPressed: () => context.go(routeDashboard)),
         title: patientAsync.whenOrNull(data: (p) => Text(p?.fullName ?? 'Pharmacy')) ??
             const Text('Pharmacy'),
         actions: const [SyncStatusBadge(), SizedBox(width: 16)],

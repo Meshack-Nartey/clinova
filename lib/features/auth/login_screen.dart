@@ -156,16 +156,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                           ],
                           const SizedBox(height: 20),
-                          FilledButton(
-                            onPressed: _loading ? null : _submit,
-                            child: _loading
-                                ? const SizedBox(
-                                    height: 22,
-                                    width: 22,
-                                    child: CircularProgressIndicator(
-                                        strokeWidth: 2, color: Colors.white),
-                                  )
-                                : const Text('Sign in'),
+                          Center(
+                            child: SizedBox(
+                              width: 180,
+                              height: 44,
+                              child: FilledButton(
+                                onPressed: _loading ? null : _submit,
+                                child: _loading
+                                    ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                            strokeWidth: 2, color: Colors.white),
+                                      )
+                                    : const Text('Sign in'),
+                              ),
+                            ),
                           ),
                         ],
                       ),

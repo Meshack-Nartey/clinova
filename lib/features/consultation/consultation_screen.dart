@@ -145,6 +145,7 @@ class _ConsultationScreenState extends ConsumerState<ConsultationScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(onPressed: () => context.go(routeDashboard)),
         title: patientAsync.whenOrNull(
               data: (p) => Text(p?.fullName ?? 'Consultation'),
             ) ??

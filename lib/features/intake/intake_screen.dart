@@ -119,6 +119,7 @@ class _IntakeScreenState extends ConsumerState<IntakeScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(onPressed: () => context.go(routeDashboard)),
         title: Text(widget.patientId == null ? 'New Patient' : 'Edit Patient'),
         actions: [
           const SyncStatusBadge(),
