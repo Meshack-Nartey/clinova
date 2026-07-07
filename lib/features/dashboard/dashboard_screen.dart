@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/auth/providers.dart';
 import '../../core/database/app_database.dart';
+import '../../core/settings/settings_providers.dart';
 import '../../core/database/tables.dart';
 import '../../core/models/patient_providers.dart';
 import '../../core/sync/sync_providers.dart';
@@ -22,6 +23,7 @@ class DashboardScreen extends ConsumerWidget {
     final session = ref.watch(sessionProvider).valueOrNull;
     final isHub = ref.watch(isHubModeProvider);
     final canAdd = _canCreatePatient(session?.role);
+    final clinicName = ref.watch(clinicNameProvider).valueOrNull;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F8F8),
@@ -38,8 +40,10 @@ class DashboardScreen extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Clinova',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, letterSpacing: -0.3)),
+                Text(
+                  clinicName ?? 'Clinova',
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, letterSpacing: -0.3),
+                ),
                 Text(
                   DateFormat('EEE, d MMM').format(DateTime.now()),
                   style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w400, color: Color(0xFFAAAAAA)),

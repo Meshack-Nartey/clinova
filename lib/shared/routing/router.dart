@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/auth/providers.dart';
 import '../../core/database/tables.dart';
+import '../../core/settings/settings_providers.dart';
 import '../../features/admin/staff_screen.dart';
 import '../../features/auth/login_screen.dart';
 import '../../features/consultation/consultation_screen.dart';
@@ -12,6 +13,7 @@ import '../../features/intake/intake_screen.dart';
 import '../../features/lab/lab_screen.dart';
 import '../../features/pharmacy/pharmacy_screen.dart';
 import '../../features/search/search_screen.dart';
+import '../../features/setup/setup_screen.dart';
 
 // Route names
 const routeLogin = '/login';
@@ -23,29 +25,42 @@ const routePharmacy = '/pharmacy/:patientId';
 const routeLab = '/lab/:patientId';
 const routeSearch = '/search';
 const routeStaff = '/staff';
+const routeSetup = '/setup';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final sessionNotifier = ref.watch(sessionProvider.notifier);
+  final clinicNameNotifier = ref.watch(clinicNameProvider.notifier);
 
   return GoRouter(
     initialLocation: routeLogin,
     redirect: (context, state) {
+      final clinicName = ref.read(clinicNameProvider);
       final session = ref.read(sessionProvider);
-      final isLoggingIn = state.matchedLocation == routeLogin;
+      final loc = state.matchedLocation;
 
-      if (session is AsyncLoading) return null;
+      // Wait for both to load
+      if (clinicName is AsyncLoading || session is AsyncLoading) return null;
 
+      // First-run: no clinic name set yet → go to setup
+      if (clinicName.valueOrNull == null && loc != routeSetup) return routeSetup;
+
+      // Clinic name set but still on setup → go to login
+      if (clinicName.valueOrNull != null && loc == routeSetup) return routeLogin;
+
+      // Not authenticated
       final authSession = session.valueOrNull;
       if (authSession == null) {
-        return isLoggingIn ? null : routeLogin;
+        return loc == routeLogin ? null : routeLogin;
       }
-      if (isLoggingIn) {
-        return _homeForRole(authSession.role);
-      }
+
+      // Authenticated and on login → go home
+      if (loc == routeLogin) return _homeForRole(authSession.role);
+
       return null;
     },
-    refreshListenable: _SessionListenable(ref, sessionNotifier),
+    refreshListenable: _CompositeListenable(ref, [sessionNotifier, clinicNameNotifier]),
     routes: [
+      GoRoute(path: routeSetup, builder: (ctx, _) => const SetupScreen()),
       GoRoute(path: routeLogin, builder: (ctx, _) => const LoginScreen()),
       GoRoute(path: routeDashboard, builder: (ctx, _) => const DashboardScreen()),
       GoRoute(path: routeSearch, builder: (ctx, _) => const SearchScreen()),
@@ -82,9 +97,10 @@ String _homeForRole(UserRole role) => switch (role) {
       UserRole.lab => routeSearch,
     };
 
-/// Makes GoRouter react to Riverpod session changes.
-class _SessionListenable extends ChangeNotifier {
-  _SessionListenable(Ref ref, StateNotifier notifier) {
+/// Makes GoRouter react to changes in any of the provided Riverpod providers.
+class _CompositeListenable extends ChangeNotifier {
+  _CompositeListenable(Ref ref, List<StateNotifier> notifiers) {
     ref.listen(sessionProvider, (prev, next) => notifyListeners());
+    ref.listen(clinicNameProvider, (prev, next) => notifyListeners());
   }
 }
