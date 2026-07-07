@@ -1,0 +1,14 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Container -->
+  <rect width="200" height="200" rx="48" fill="#111111"/>
+  <!-- Cross bars -->
+  <rect x="92" y="44" width="16" height="112" fill="white"/>
+  <rect x="44" y="92" width="112" height="16" fill="white"/>
+  <!-- Arm-end nodes (slightly wider than bars, creating distinct caps) -->
+  <circle cx="100" cy="44"  r="13" fill="white"/>
+  <circle cx="100" cy="156" r="13" fill="white"/>
+  <circle cx="44"  cy="100" r="13" fill="white"/>
+  <circle cx="156" cy="100" r="13" fill="white"/>
+  <!-- Center hub (clearly wider than bars, emphasising the junction) -->
+  <circle cx="100" cy="100" r="21" fill="white"/>
+</svg>
