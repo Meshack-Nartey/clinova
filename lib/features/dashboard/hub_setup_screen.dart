@@ -32,20 +32,37 @@ class _HubSetupSheetState extends ConsumerState<HubSetupSheet> {
     try {
       await ref.read(hubServerProvider.notifier).start();
       final ip = await _getLocalIp();
-      if (mounted) setState(() => _hubIp = ip);
+      if (mounted) {
+        setState(() {
+          _hubIp = ip;
+          _error = ip == null
+              ? 'Hub started, but this device isn\'t on a network yet. Wi-Fi '
+                  'being switched on isn\'t enough by itself — join an existing '
+                  'Wi-Fi network, or turn on this device\'s Personal Hotspot / '
+                  'Mobile Hotspot so other devices can join you. No internet is '
+                  'needed either way.'
+              : null;
+        });
+      }
     } catch (e) {
       setState(() => _error = 'Failed to start hub: $e');
     }
   }
 
-  Future<String> _getLocalIp() async {
+  /// Returns the device's LAN IPv4 address, or null if there's no usable
+  /// network (e.g. Wi-Fi is off — only loopback/link-local addresses remain).
+  Future<String?> _getLocalIp() async {
     final interfaces = await NetworkInterface.list(type: InternetAddressType.IPv4);
     for (final iface in interfaces) {
       for (final addr in iface.addresses) {
-        if (!addr.isLoopback) return addr.address;
+        if (addr.isLoopback) continue;
+        // 169.254.x.x is a self-assigned address handed out when a device
+        // can't reach a router/DHCP server — not reachable by other devices.
+        if (addr.address.startsWith('169.254.')) continue;
+        return addr.address;
       }
     }
-    return 'unknown';
+    return null;
   }
 
   Future<void> _stopHub() async {
@@ -108,7 +125,9 @@ class _HubSetupSheetState extends ConsumerState<HubSetupSheet> {
           ),
           const SizedBox(height: 4),
           Text(
-            'All devices must be on the same Wi-Fi network.',
+            'No internet needed — but every device must join the same '
+            'network. Use an existing Wi-Fi router, or have one device '
+            'turn on its own hotspot for the others to join.',
             style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
           ),
           const SizedBox(height: 24),
